@@ -8,8 +8,8 @@ import org.apache.spark.sql.SparkSession
 object WordCount {
 
   def main(args: Array[String]): Unit = {
-    val sparkSession = SparkSession.builder().master("local[4]").appName("wordCount").getOrCreate()
-    val lineRdd = sparkSession.sparkContext.textFile("E:\\hello.txt", 2)
+    val sparkSession = SparkSession.builder().appName("wordCount").getOrCreate()
+    val lineRdd = sparkSession.sparkContext.textFile("/tmp/lizy/test.txt", 2)
     val wordRdd = lineRdd.flatMap(line => line.split(","))
     val wordMapRdd = wordRdd.map(word => (word, 1))
     val reduceRdd = wordMapRdd.reduceByKey(_ + _)
